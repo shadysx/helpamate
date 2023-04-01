@@ -1,9 +1,7 @@
-import React, { Children, useEffect, useState } from 'react'
-import { View, Text } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { auth } from '../config/firebase'
 import { onAuthStateChanged } from 'firebase/auth'
-import UnAuthStack from '../navigation/unAuthStack'
-import Logged from '../screens/Logged'
+
 
 export const AuthContext = React.createContext()
 

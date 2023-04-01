@@ -4,7 +4,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 import { useAuth } from '../context/Auth';
 
-
 const SignupScreen = ({ navigation }) => {
   const [value, setValue] = React.useState({
     email: 'shadytest@gmail.com',

@@ -3,10 +3,6 @@ import React, { useContext, useState } from 'react'
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useAuth } from '../context/Auth';
 
-
-
-
-
 const SignIn = ({ navigation }) => {
   const {auth} = useAuth()
 
@@ -30,7 +26,6 @@ const SignIn = ({ navigation }) => {
     const errorMessage = error.message;
   });
   }
-
 
   return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

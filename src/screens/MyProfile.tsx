@@ -6,11 +6,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../context/Auth';
 import { signOut } from 'firebase/auth';
 
-
-
-
-
-
 const MyProfile = ({ navigation }) => {
     const {currentUser, auth} = useAuth()
     const handleLogout = () => {

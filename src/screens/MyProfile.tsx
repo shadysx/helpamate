@@ -4,6 +4,8 @@ import { Avatar } from "@react-native-material/core";
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AuthContext } from '../context/Auth';
+import { signOut } from 'firebase/auth';
+import { auth } from '../config/firebase';
 
 
 
@@ -12,8 +14,7 @@ import { AuthContext } from '../context/Auth';
 const MyProfile = ({ navigation }) => {
     const {currentUser} = useContext(AuthContext)
     const handleLogout = () => {
-        // Navigate back to the login screen and replace the current stack with the login screen
-        navigation.replace('SignIn');
+        signOut(auth);
     };
   return (
     <SafeAreaView edges={["top"]} style={{flex:1}}>

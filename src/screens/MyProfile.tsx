@@ -3,16 +3,16 @@ import React, { useContext } from 'react'
 import { Avatar } from "@react-native-material/core";
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { AuthContext } from '../context/Auth';
+import { useAuth } from '../context/Auth';
 import { signOut } from 'firebase/auth';
-import { auth } from '../config/firebase';
+
 
 
 
 
 
 const MyProfile = ({ navigation }) => {
-    const {currentUser} = useContext(AuthContext)
+    const {currentUser, auth} = useAuth()
     const handleLogout = () => {
         signOut(auth);
     };

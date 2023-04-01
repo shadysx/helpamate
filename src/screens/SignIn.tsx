@@ -1,13 +1,15 @@
 import { View, Text, TextInput, Button } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from '../config/firebase'
+import { useAuth } from '../context/Auth';
 
 
 
 
 
 const SignIn = ({ navigation }) => {
+  const {auth} = useAuth()
+
   const [value, setValue] = React.useState({
     email: "shady12345@gmail.com",
     password: "qwerty",

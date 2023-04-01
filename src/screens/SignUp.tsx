@@ -1,17 +1,34 @@
 
-import React, { useEffect, useState } from 'react';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { useAuth } from '../context/Auth';
 
 
 const SignupScreen = ({ navigation }) => {
   const [value, setValue] = React.useState({
-    email: '',
-    password: '',
+    email: 'shadytest@gmail.com',
+    password: 'testts',
     error: ''
   })
 
-  async function signUp() {
+  const {currentUser, auth} = useAuth()
 
+  async function signUp() {
+    createUserWithEmailAndPassword(auth, value.email, value.password)
+    .then((userCredential) => {
+      // Signed in 
+      const user = userCredential.user;
+      console.log(user)
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      setValue({...value, error: errorMessage})
+      console.log(errorMessage)
+      // ..
+    });
   }
 
 
@@ -33,7 +50,7 @@ const SignupScreen = ({ navigation }) => {
         style={styles.input}
         placeholder="Password"
         value={value.password}
-        onChangeText={(text) => setValue({ ...value, email: text })}
+        onChangeText={(text) => setValue({ ...value, password: text })}
         secureTextEntry
       />
       <Button title="Sign up" onPress={signUp} />

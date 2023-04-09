@@ -1,4 +1,4 @@
-﻿using HelpAMateAPI.DataBase;
+using HelpAMateAPI.DataBase;
 using HelpAMateAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +24,35 @@ public class WishController : ControllerBase
     [HttpGet(Name = "GetWishes")]
     public async Task<IActionResult> Get()
     {
-        return Ok(Wishes);
+        //var wishes = await _dbContext.Wishes.Include(w => w.User).ToListAsync();
+        
+        /*var wishes = usersWithWishes
+            .SelectMany(u => u.Wishes.Select(w => new {
+                Id = w.Id,
+                Title = w.Title,
+                Description = w.Description,
+                UserId = w.UserId,
+                User = new {
+                    Id = u.Id,
+                    Username = u.Username,
+                    AvatarUrl = u.AvatarUrl
+                }
+            }))
+            .ToList();*/
+        
+        var wishesWithUsers = await _dbContext.Wishes.Include(w => w.User).ToListAsync();
+
+        var result = wishesWithUsers.Select(w => new {
+            Id = w.Id,
+            Title = w.Title,
+            Description = w.Description,
+            User = new {
+                Id = w.User.Id,
+                Username = w.User.Username,
+                AvatarUrl = w.User.AvatarUrl
+            }
+        }).ToList();
+        return Ok(result);
     }
     
     [HttpPost]

@@ -6,6 +6,7 @@ import SignIn from '../screens/SignIn';
 import SignUp from '../screens/SignUp';
 import Welcome from '../screens/Welcome';
 import Logged from '../screens/Logged';
+import Test from '../screens/Test';
 
 const Stack = createStackNavigator();
 
@@ -13,6 +14,11 @@ export default function UnAuthStack() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+      {/* <Stack.Screen
+          name="Test"
+          component={Test}
+          options={{ headerShown: false  }}
+        /> */}
       <Stack.Screen
           name="SignIn"
           component={SignIn}

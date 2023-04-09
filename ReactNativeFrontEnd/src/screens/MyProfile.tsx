@@ -1,5 +1,5 @@
 import { View, Text, Button } from 'react-native'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Avatar } from "@react-native-material/core";
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -8,6 +8,8 @@ import { signOut } from 'firebase/auth';
 
 const MyProfile = ({ navigation }) => {
     const {currentUser, auth} = useAuth()
+    const [users, setUsers] = useState<User[]>([]);
+
     const handleLogout = () => {
         signOut(auth);
     };

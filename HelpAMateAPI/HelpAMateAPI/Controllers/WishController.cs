@@ -1,4 +1,4 @@
-﻿using HelpAMateAPI.DataBase;
+using HelpAMateAPI.DataBase;
 using HelpAMateAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

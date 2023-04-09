@@ -1,10 +1,12 @@
 import { View, Text, Button } from 'react-native'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { Avatar } from "@react-native-material/core";
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../context/Auth';
 import { signOut } from 'firebase/auth';
+import axios from 'axios';
+
 
 const MyProfile = ({ navigation }) => {
     const {currentUser, auth} = useAuth()
@@ -13,6 +15,24 @@ const MyProfile = ({ navigation }) => {
     const handleLogout = () => {
         signOut(auth);
     };
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await fetch('https://localhost:7249/user', {
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+            const data = await response.json();
+            console.log(data);
+          } catch (error) {
+            console.log("Handled Error: ", error);
+          }
+        };
+        fetchData();
+      }, []);
+
+
   return (
     <SafeAreaView edges={["top"]} style={{flex:1}}>
         <View style={styles.titleSection}>

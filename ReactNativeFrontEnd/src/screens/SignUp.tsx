@@ -3,6 +3,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import React, { useContext, useEffect, useState } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 import { useAuth } from '../context/Auth';
+import { UserService } from '../services/UserService';
 
 const SignupScreen = ({ navigation }) => {
   const [value, setValue] = React.useState({
@@ -17,9 +18,18 @@ const SignupScreen = ({ navigation }) => {
     createUserWithEmailAndPassword(auth, value.email, value.password)
     .then((userCredential) => {
       // Signed in 
-      const user = userCredential.user;
-      console.log(user)
-      // ...
+      const firebaseUser = userCredential.user;
+      console.log(firebaseUser)
+      
+      // After firebase signup create user in database
+      const user: User = { 
+        email: value.email,
+        avatarUrl: "https://mui.com/static/images/avatar/1.jpg",
+      }
+
+      const userService = new UserService()
+      userService.CreateUser(user)
+
     })
     .catch((error) => {
       const errorCode = error.code;

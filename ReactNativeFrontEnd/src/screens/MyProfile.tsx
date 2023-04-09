@@ -1,5 +1,5 @@
 import { View, Text, Button } from 'react-native'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Avatar } from "@react-native-material/core";
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -9,29 +9,11 @@ import axios from 'axios';
 
 
 const MyProfile = ({ navigation }) => {
-    const {currentUser, auth} = useAuth()
-    const [users, setUsers] = useState<User[]>([]);
+    const {currentUser, auth} = useAuth()   
 
     const handleLogout = () => {
         signOut(auth);
     };
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const response = await fetch('https://localhost:7249/user', {
-              headers: {
-                'Content-Type': 'application/json'
-              }
-            });
-            const data = await response.json();
-            console.log(data);
-          } catch (error) {
-            console.log("Handled Error: ", error);
-          }
-        };
-        fetchData();
-      }, []);
-
 
   return (
     <SafeAreaView edges={["top"]} style={{flex:1}}>
@@ -42,7 +24,7 @@ const MyProfile = ({ navigation }) => {
             <Avatar 
                 label="Kent Dodds" 
                 size={120}
-                image={{ uri: "https://mui.com/static/images/avatar/3.jpg" }}/>
+                image={{ uri: currentUser.avatarUrl }}/>
         </View>
         <View style={styles.userInfo}>
             <Text >Connected as {currentUser.email}</Text>

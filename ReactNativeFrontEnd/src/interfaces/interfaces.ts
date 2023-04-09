@@ -1,12 +1,13 @@
 interface Wish {
-    id: number,
     title: string,
     description: string,
-    user: User
+    user?: User,
+    userId: number;
 }
 
 interface User {
-    username: string,
+    id?: number
+    email: string,
     avatarUrl: string,
-    wishes: Wish[]
+    wishes?: Wish[]
 }

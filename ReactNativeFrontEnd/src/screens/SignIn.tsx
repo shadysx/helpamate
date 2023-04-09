@@ -15,16 +15,16 @@ const SignIn = ({ navigation }) => {
 
   async function handleLogin() {
     signInWithEmailAndPassword(auth, value.email, value.password)
-  .then((userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-    console.log(user.email)
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-  });
+    .then((userCredential) => {
+      // Signed in 
+      const user = userCredential.user;
+      console.log(user.email)
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
   }
 
   return (

@@ -15,3 +15,30 @@ web-build/
 
 # Temporary files created by Metro to check the health of the file watcher
 .metro-health-check*
+
+# .NET ASP Build files
+bin/
+obj/
+*.suo
+*.user
+*.vspscc
+*.vssscc
+*.cache
+*.dbmdl
+*.dbproj.schemaview
+*.docstates
+*.jfm
+*.log
+*.ndoc
+*.nupkg
+*.pfx
+*.pidb
+*.rdl.data
+*.rptproj.user
+*.sln.docstates
+*.suo
+*.user
+*.userosscache
+*.webtest
+*.xml.cache
+*.vc.db

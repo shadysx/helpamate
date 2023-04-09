@@ -33,7 +33,7 @@ public class UserController : ControllerBase
 
         var user = new User
         {
-            Username = model.Username,
+            Email = model.Email,
             AvatarUrl = model.AvatarUrl,
             Wishes = model.Wishes
         };

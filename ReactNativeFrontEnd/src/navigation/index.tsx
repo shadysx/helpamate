@@ -11,9 +11,9 @@ const RootNavigation = () => {
   //const { user } = useAuth();
   //return user ? null : <AuthStack/>;
 
-  const {currentUser} = useContext(AuthContext)
+  const {currentFirebaseUser} = useContext(AuthContext)
 
-  if(currentUser){
+  if(currentFirebaseUser){
     return <AuthStack/>
   }
 

@@ -23,12 +23,12 @@ const WishList = () => {
               <ListItem
                   key={index}
                   leadingMode="avatar"
-                  title={wish.user.username}
+                  title={wish.user.email}
                   secondaryText={wish.description}
                   leading={
                       <Avatar image={{ uri: wish.user.avatarUrl }} />
                   }
-                  />
+              />
           ))}
       </ScrollView>
     </SafeAreaView>

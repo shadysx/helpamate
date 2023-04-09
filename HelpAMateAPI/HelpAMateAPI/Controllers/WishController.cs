@@ -24,22 +24,6 @@ public class WishController : ControllerBase
     [HttpGet(Name = "GetWishes")]
     public async Task<IActionResult> Get()
     {
-        //var wishes = await _dbContext.Wishes.Include(w => w.User).ToListAsync();
-        
-        /*var wishes = usersWithWishes
-            .SelectMany(u => u.Wishes.Select(w => new {
-                Id = w.Id,
-                Title = w.Title,
-                Description = w.Description,
-                UserId = w.UserId,
-                User = new {
-                    Id = u.Id,
-                    Username = u.Username,
-                    AvatarUrl = u.AvatarUrl
-                }
-            }))
-            .ToList();*/
-        
         var wishesWithUsers = await _dbContext.Wishes.Include(w => w.User).ToListAsync();
 
         var result = wishesWithUsers.Select(w => new {
@@ -48,7 +32,7 @@ public class WishController : ControllerBase
             Description = w.Description,
             User = new {
                 Id = w.User.Id,
-                Username = w.User.Username,
+                Email = w.User.Email,
                 AvatarUrl = w.User.AvatarUrl
             }
         }).ToList();

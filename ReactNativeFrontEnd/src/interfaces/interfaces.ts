@@ -6,7 +6,7 @@ interface Wish {
 }
 
 interface User {
-    username: string,
+    email: string,
     avatarUrl: string,
-    wishes: Wish[]
+    wishes?: Wish[]
 }

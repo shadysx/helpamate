@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {        
-        console.log("User logged in: ", JSON.stringify(user, null, 2))
+        //console.log("User logged in: ", JSON.stringify(user, null, 2))
         setCurrentFirebaseUser(user)
 
         // Get the associated user data from the .NET API, based on the firebase user email

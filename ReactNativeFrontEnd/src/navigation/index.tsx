@@ -2,7 +2,6 @@ import { View, Text } from 'react-native'
 import { AuthProvider } from '../context/Auth';
 import { AuthContext } from '../context/Auth';
 import { useContext } from 'react';
-import Logged from '../screens/Logged';
 import { NavigationContainer } from '@react-navigation/native';
 import UnAuthStack from './unAuthStack';
 import AuthStack from './authStack';

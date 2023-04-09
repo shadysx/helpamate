@@ -20,13 +20,13 @@ const SignupScreen = ({ navigation }) => {
       // Signed in 
       const firebaseUser = userCredential.user;
       console.log(firebaseUser)
+      
       // After firebase signup create user in database
-
       const user: User = { 
         email: value.email,
         avatarUrl: "https://mui.com/static/images/avatar/1.jpg",
       }
-      
+
       const userService = new UserService()
       userService.CreateUser(user)
 

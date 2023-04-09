@@ -5,6 +5,7 @@ export class UserService {
           const data = await response.json();
 
           const transformedUsers: User[] = data.$values.map((user: any) => ({
+              id: user.id,
               email: user.email,
               avatarUrl: user.avatarUrl,
               wishes: user.wishes.$values
@@ -25,8 +26,6 @@ export class UserService {
           },
           body: JSON.stringify(user)
         });
-
-        console.log("response: ", response.json())
     
         if (!response.ok) {
           throw new Error('Failed to create user');

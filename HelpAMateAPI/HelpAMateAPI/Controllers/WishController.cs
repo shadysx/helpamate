@@ -49,7 +49,10 @@ public class WishController : ControllerBase
 
         var wish = new Wish
         {
-            Description = model.Description
+            Title = model.Title,
+            Description = model.Description,
+            UserId = model.UserId    
+           
         };
 
         _dbContext.Wishes?.Add(model);

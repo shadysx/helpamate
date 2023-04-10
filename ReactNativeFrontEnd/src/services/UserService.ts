@@ -17,7 +17,7 @@ export class UserService {
         }
       };
 
-    CreateUser = async (user: User) => {
+    CreateUser = async (user: User) => {  
       try {
         const response = await fetch('http://192.168.0.99:5001/User', {
           method: 'POST',

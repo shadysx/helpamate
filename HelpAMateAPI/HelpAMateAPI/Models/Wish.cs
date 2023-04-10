@@ -1,4 +1,6 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore;
+
 namespace HelpAMateAPI.Models
 {
 	public class Wish

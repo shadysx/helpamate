@@ -5,7 +5,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import SignIn from '../screens/SignIn';
 import SignUp from '../screens/SignUp';
 import Welcome from '../screens/Welcome';
-import Logged from '../screens/Logged';
 import Test from '../screens/Test';
 
 const Stack = createStackNavigator();

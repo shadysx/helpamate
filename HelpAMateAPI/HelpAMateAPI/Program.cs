@@ -25,6 +25,7 @@ builder.Services.AddCors(options =>
     });
 });
 
+// Someday will need to add https certificate to appsettings.json
 builder.WebHost.ConfigureKestrel((context, options) =>
 {
     options.Configure(context.Configuration.GetSection("Kestrel"));

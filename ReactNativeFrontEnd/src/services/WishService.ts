@@ -7,8 +7,9 @@ export class WishService {
   FetchWishes = async () => {
     console.log(API + "/Wishes")
     try {
-      const response = await fetch(API + this.route);
-      const data : Wish[] = await response.json();
+      const response = await fetch(API + this.route)
+        .then(response => response.json())
+      const data: Wish[] = response.data;
       console.log("Fetch from WishService:", JSON.stringify(data, null, 2))
 
       return data;
@@ -18,6 +19,30 @@ export class WishService {
     } 
   };
 
+  FetchWishById = async (wishId: number) => {
+    console.log(API + this.route + '/' + wishId)
+    try {
+      const response = await fetch(API + this.route + '/' + wishId, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch wish');
+      }
+      
+      const data = await response.json();
+
+      console.log(data)
+  
+      return data;
+    }
+    catch (error){
+      console.log('Handled Error when fetchin a wish by id:', error);
+    }
+  }
 
   CreateWish = async (wish: WishCreationDTO) => {
     console.log(API + this.route)

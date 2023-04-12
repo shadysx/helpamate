@@ -16,7 +16,8 @@ const AddWish = () => {
     const handleSubmit = () => {
         console.log(value)
       //wishService.CreateWish(value)
-      wishService.UpdateWish(value2)
+      //wishService.UpdateWish(value2)
+      wishService.FetchWishById(12)
     };
   
     return (

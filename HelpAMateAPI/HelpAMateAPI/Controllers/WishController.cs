@@ -25,7 +25,7 @@ public class WishController : ControllerBase
 
 
     [HttpGet(Name = "GetWishes")]
-    public async Task<IActionResult> Get()
+    public async Task<ApiResponse> Get()
     {
         var wishesWithUsers = await _dbContext.Wishes.Include(w => w.User).ToListAsync();
         
@@ -40,7 +40,7 @@ public class WishController : ControllerBase
             }
         }).ToList();
 
-        return Ok(response);
+        return new ApiResponse("Fetching with success", response);
     }
     
     [HttpGet("{id}", Name = "GetByWishId")]

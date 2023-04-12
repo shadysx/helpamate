@@ -23,11 +23,11 @@ export const AuthProvider = ({ children }) => {
         setCurrentFirebaseUser(user)
 
         // Get the associated user data from the .NET API, based on the firebase user email
-        userService.FetchUsers()
-        .then(users => {
-          let u = users.find(u => u.email == user.email)
-          setCurrentUser(u)
-        })
+        // userService.FetchUsers()
+        // .then(users => {
+        //   let u = users.find(u => u.email == user.email)
+        //   setCurrentUser(u)
+        // })
       } else {
         console.log("User logged out")
         setCurrentFirebaseUser(null)

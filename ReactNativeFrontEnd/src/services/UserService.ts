@@ -1,7 +1,9 @@
+import { API } from "../config/constants";
+
 export class UserService {
     FetchUsers = async () => {
         try {
-          const response = await fetch('http://192.168.0.99:5001/User');
+          const response = await fetch(API + "/user");
           const data = await response.json();
 
           const transformedUsers: User[] = data.$values.map((user: any) => ({
@@ -19,7 +21,7 @@ export class UserService {
 
     CreateUser = async (user: User) => {  
       try {
-        const response = await fetch('http://192.168.0.99:5001/User', {
+        const response = await fetch(API + "/user", {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

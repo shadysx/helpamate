@@ -17,8 +17,8 @@ web-build/
 .metro-health-check*
 
 # .NET ASP Build files
-bin/
-obj/
+*bin/
+*obj/
 *.suo
 *.user
 *.vspscc

@@ -19,16 +19,6 @@ public class DatabaseContext: DbContext
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<User>()
-            .HasMany(u => u.Wishes)
-            .WithOne(w => w.User)
-            .HasForeignKey(w => w.UserId);
-
-
-        modelBuilder.Entity<Wish>()
-            .HasOne(w => w.User)
-            .WithMany(u => u.Wishes)
-            .HasForeignKey(w => w.UserId);
 
     }
     

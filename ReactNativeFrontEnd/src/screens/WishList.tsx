@@ -6,11 +6,11 @@ import { WishService } from "../services/WishService";
 import { View, Text } from "react-native";
 
 const WishList = () => {
-  const [wishes, setWishes] = useState([]);
+  const [wishes, setWishes] = useState<Wish[]>([]);
   useEffect(() => {
     const fetchWishes = async () => {
       const wishService = new WishService();
-      const fetchedWishes = await wishService.FetchWishes();
+      const fetchedWishes : Wish[] = await wishService.FetchWishes();
       setWishes(fetchedWishes);
     };
     fetchWishes();

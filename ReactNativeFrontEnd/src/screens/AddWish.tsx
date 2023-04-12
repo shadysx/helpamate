@@ -7,14 +7,16 @@ import { useAuth } from '../context/Auth';
 const AddWish = () => {
     const {currentUser, auth} = useAuth() 
 
-    const [value, setValue] = useState<Wish>({ title: '', description: '', userId: currentUser.id});
+    const [value, setValue] = useState<WishCreationDTO>({ title: 'New Wish', description: 'For user 3', userId: 3});
+    const [value2, setValue2] = useState<WishUpdateDTO>({ id: 5, title: 'Hello', description: 'For wish5'});
     const wishService = new WishService()
  
 
 
     const handleSubmit = () => {
         console.log(value)
-      wishService.CreateWish(value)
+      //wishService.CreateWish(value)
+      wishService.UpdateWish(value2)
     };
   
     return (

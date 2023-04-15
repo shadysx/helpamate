@@ -17,7 +17,6 @@ const Test = () => {
     <View style={styles.container}>
       {users.map((user: User, index: number) => (
         <View key={index}>
-          <Text>{user.username}</Text>
           <Text>{user.avatarUrl}</Text>
           {user.wishes.map((wish: Wish, index: number) => (
             <View key={index}>

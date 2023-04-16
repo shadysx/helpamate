@@ -12,6 +12,7 @@ const WishList = () => {
       const wishService = new WishService();
       const fetchedWishes : Wish[] | null = await wishService.FetchWishes();
       setWishes(fetchedWishes);
+      console.log(fetchedWishes)
     };
     fetchWishes();
   }, []);

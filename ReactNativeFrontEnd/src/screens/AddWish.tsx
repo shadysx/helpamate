@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { WishService } from '../services/WishService';
 import { useAuth } from '../context/Auth';
 
+
 const AddWish = () => {
     const {currentUser, auth} = useAuth() 
 

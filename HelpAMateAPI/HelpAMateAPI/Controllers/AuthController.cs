@@ -1,9 +1,11 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using HelpAMateAPI.DataBase;
 using HelpAMateAPI.Models;
 using HelpAMateAPI.Models.DTO.User;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 namespace HelpAMateAPI.Controllers;
@@ -12,18 +14,28 @@ namespace HelpAMateAPI.Controllers;
 [Route("[controller]")]
 public class AuthController : ControllerBase
 {
-    public static User user = new User();
+    private readonly DatabaseContext _dbContext;
     private readonly IConfiguration _configuration;
 
-    public AuthController(IConfiguration configuration)
+    public AuthController(IConfiguration configuration, DatabaseContext dbContext)
     {
         _configuration = configuration;
+        _dbContext = dbContext;
     }
     
     [HttpPost("register")]
     public async Task<ActionResult<User>> Register(UserCreationDto request)
     {
         
+        // Check if exist
+        var existingUser = _dbContext.Users.FirstOrDefault(u => u.Email == request.Email || u.Username == request.Username);
+        if (existingUser != null)
+        {
+            return BadRequest("Email or username already in use");
+        }
+        
+        // Create user
+        User user = new();
         CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
         
         user.Username = request.Username;
@@ -31,24 +43,31 @@ public class AuthController : ControllerBase
         user.PasswordHash = passwordHash;
         user.PasswordSalt = passwordSalt;
 
+        _dbContext.Users.Add(user);
+        await _dbContext.SaveChangesAsync();
+
         return Ok(user);
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<string>> Login(UserCreationDto request)
+    public async Task<ActionResult<string>> Login(UserLoginDto request)
     {
-        if (user.Username != request.Username)
+        
+        // Check if exist
+        var existingUser = _dbContext.Users.FirstOrDefault(u => u.Username == request.Username);
+        
+        if (existingUser == null)
         {
             return BadRequest("User not found");
         }
 
-        if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
+        if (!VerifyPasswordHash(request.Password, existingUser.PasswordHash, existingUser.PasswordSalt))
         {
             return BadRequest("Wrong password");
         }
 
-        string token = CreateToken(user);
-        return Ok(token);
+        string token = CreateToken(existingUser);
+        return Ok(new {jwt = token});
     }
 
     private string CreateToken(User user)

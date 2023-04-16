@@ -23,6 +23,8 @@ public class UserController : ControllerBase
         return Ok(users);
     }
 
+    
+    /*
     [HttpPost]
     public async Task<IActionResult> CreateUser(User model)
     {
@@ -43,6 +45,7 @@ public class UserController : ControllerBase
 
         return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
     }
+    */
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetUserById(int id)

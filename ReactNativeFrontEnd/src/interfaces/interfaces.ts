@@ -7,6 +7,17 @@ interface User {
     wishes?: Wish[]
 }
 
+interface UserRegisterDTO {
+    username: string,
+    email: string,
+    password: string
+}
+
+interface UserLoginDTO {
+    username: string,
+    password: string
+}
+
 interface Wish {
     id: number,
     title: string,

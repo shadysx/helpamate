@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 import { useAuth } from '../context/Auth';
 import { UserService } from '../services/UserService';
+import { AuthService } from '../services/AuthService';
 
 const SignupScreen = ({ navigation }) => {
   const [value, setValue] = React.useState({
@@ -14,30 +15,8 @@ const SignupScreen = ({ navigation }) => {
 
   const {currentUser, auth} = useAuth()
 
-  async function signUp() {
-    createUserWithEmailAndPassword(auth, value.email, value.password)
-    .then((userCredential) => {
-      // Signed in 
-      const firebaseUser = userCredential.user;
-      console.log(firebaseUser)
-      
-      // After firebase signup create user in database
-      const user: User = { 
-        email: value.email,
-        avatarUrl: "https://mui.com/static/images/avatar/1.jpg",
-      }
-
-      const userService = new UserService()
-      userService.CreateUser(user)
-
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      setValue({...value, error: errorMessage})
-      console.log(errorMessage)
-      // ..
-    });
+  async function handleSignUp() {
+    
   }
 
 
@@ -62,7 +41,7 @@ const SignupScreen = ({ navigation }) => {
         onChangeText={(text) => setValue({ ...value, password: text })}
         secureTextEntry
       />
-      <Button title="Sign up" onPress={signUp} />
+      <Button title="Sign up" onPress={handleSignUp} />
       <Button title="Already have an account?" onPress={() => navigation.navigate("SignIn")} />
     </View>
   );

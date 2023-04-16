@@ -10,8 +10,9 @@ const WishList = () => {
   useEffect(() => {
     const fetchWishes = async () => {
       const wishService = new WishService();
-      const fetchedWishes : Wish[] = await wishService.FetchWishes();
+      const fetchedWishes : Wish[] | null = await wishService.FetchWishes();
       setWishes(fetchedWishes);
+      console.log(fetchedWishes)
     };
     fetchWishes();
   }, []);
@@ -19,7 +20,7 @@ const WishList = () => {
     <>
     <SafeAreaView edges={["top"]}>
       <ScrollView>
-          {wishes.map((wish: Wish, index: number)=> (
+          {wishes?.map((wish: Wish, index: number)=> (
               <ListItem
                   key={index}
                   leadingMode="avatar"

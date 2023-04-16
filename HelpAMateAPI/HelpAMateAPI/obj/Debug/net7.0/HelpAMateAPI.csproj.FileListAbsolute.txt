@@ -74,3 +74,8 @@
 /Users/shady/code/React/helpamate/HelpAMateAPI/HelpAMateAPI/bin/Debug/net7.0/Microsoft.Extensions.DependencyModel.dll
 /Users/shady/code/React/helpamate/HelpAMateAPI/HelpAMateAPI/bin/Debug/net7.0/Mono.TextTemplating.dll
 /Users/shady/code/React/helpamate/HelpAMateAPI/HelpAMateAPI/bin/Debug/net7.0/System.CodeDom.dll
+/Users/shady/code/React/helpamate/HelpAMateAPI/HelpAMateAPI/bin/Debug/net7.0/Microsoft.IdentityModel.Abstractions.dll
+/Users/shady/code/React/helpamate/HelpAMateAPI/HelpAMateAPI/bin/Debug/net7.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/shady/code/React/helpamate/HelpAMateAPI/HelpAMateAPI/bin/Debug/net7.0/Microsoft.IdentityModel.Logging.dll
+/Users/shady/code/React/helpamate/HelpAMateAPI/HelpAMateAPI/bin/Debug/net7.0/Microsoft.IdentityModel.Tokens.dll
+/Users/shady/code/React/helpamate/HelpAMateAPI/HelpAMateAPI/bin/Debug/net7.0/System.IdentityModel.Tokens.Jwt.dll

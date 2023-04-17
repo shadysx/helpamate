@@ -1,24 +1,27 @@
-import { View, Text } from 'react-native'
-import { AuthProvider } from '../context/Auth';
-import { AuthContext } from '../context/Auth';
-import { useContext } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { AuthContext } from '../context/AuthContext';
+import { View, ActivityIndicator } from 'react-native'
+import { useContext, useEffect } from 'react';
 import UnAuthStack from './unAuthStack';
 import AuthStack from './authStack';
 
 const RootNavigation = () => {
-  //const { user } = useAuth();
-  //return user ? null : <AuthStack/>;
 
-  const {currentFirebaseUser} = useContext(AuthContext)
+  const {isLoading, userToken} = useContext(AuthContext)
 
-  if(currentFirebaseUser){
-    return <AuthStack/>
-  }
+  if(isLoading){
+    return (
+      <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+        <ActivityIndicator size={'large'}/>
+      </View>
+    )
+  } 
+  return (
 
-  else {
-    return <UnAuthStack/>
-  }
+      <View style={{flex:1}}>
+        {userToken != null ? <AuthStack/> : <UnAuthStack/>}
+      </View>
+  
+  )
 }
 
 export default RootNavigation;

@@ -14,11 +14,11 @@ export default function UnAuthStack() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-      <Stack.Screen
+      {/* <Stack.Screen
           name="Test"
           component={Test}
           options={{ headerShown: false  }}
-        />
+        /> */}
       <Stack.Screen
           name="SignIn"
           component={SignIn}

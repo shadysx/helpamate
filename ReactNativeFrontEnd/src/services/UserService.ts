@@ -12,7 +12,7 @@ export class UserService {
             avatarUrl: user.avatarUrl,
             wishes: user.wishes.$values
           }));
-          console.log("Fetch from UserService :", JSON.stringify(transformedUsers, null, 2))
+          // console.log("Fetch from UserService :", JSON.stringify(transformedUsers, null, 2))
           return transformedUsers;
       } catch (error) {
         console.log("Handled Error: ", error);

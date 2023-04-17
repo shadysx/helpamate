@@ -3,17 +3,20 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Avatar } from "@react-native-material/core";
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useAuth } from '../context/Auth';
+import { AuthContext } from '../context/AuthContext';
 import { signOut } from 'firebase/auth';
 import axios from 'axios';
 
 
 const MyProfile = ({ navigation }) => {
-    const {currentUser, auth} = useAuth()   
+    const {logout, userInfo} = useContext(AuthContext)   
 
     const handleLogout = () => {
-        signOut(auth);
+        logout();
     };
+    useEffect(() => {
+        console.log("profile", userInfo)
+    })
 
   return (
     <SafeAreaView edges={["top"]} style={{flex:1}}>
@@ -24,10 +27,11 @@ const MyProfile = ({ navigation }) => {
             <Avatar 
                 label="Kent Dodds" 
                 size={120}
-                image={{ uri: currentUser.avatarUrl }}/>
+                image={{ uri: userInfo?.avatarUrl }}
+                />
         </View>
         <View style={styles.userInfo}>
-            <Text >Connected as {currentUser.email}</Text>
+            <Text >Connected as {userInfo?.username}</Text>
         </View>
 
         <Button title="Logout" onPress={handleLogout} />

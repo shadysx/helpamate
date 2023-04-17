@@ -1,44 +1,33 @@
 import { View, Text, TextInput, Button } from 'react-native'
 import React, { useContext, useState } from 'react'
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { useAuth } from '../context/Auth';
+import { AuthContext } from '../context/AuthContext';
 
 const SignIn = ({ navigation }) => {
-  const {auth} = useAuth()
+  const {login} = useContext(AuthContext);
 
-  const [value, setValue] = React.useState({
-    email: "shady12345@gmail.com",
-    password: "qwerty",
-    error: "",
+  const [user, setUser] = useState<UserLoginDTO>({
+    username: "shady2",
+    password: "azerty"
   });
 
 
   async function handleLogin() {
-    signInWithEmailAndPassword(auth, value.email, value.password)
-    .then((userCredential) => {
-      // Signed in 
-      const user = userCredential.user;
-      console.log(user.email)
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-    });
+    await login(user);
   }
 
   return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <TextInput
         placeholder="Username"
-        value={value.email}
-        onChangeText={(text) => setValue({ ...value, email: text })}
+        value={user.username}
+        onChangeText={(text) => setUser({ ...user, username: text })}
         style={{ borderWidth: 1, padding: 10, marginBottom: 10, width: 200 }}
       />
       <TextInput
         placeholder="Password"
-        value={value.password}
-        onChangeText={(text) => setValue({ ...value, password: text })}
+        value={user.password}
+        onChangeText={(text) => setUser({ ...user, password: text })}
         secureTextEntry
         style={{ borderWidth: 1, padding: 10, marginBottom: 10, width: 200 }}
       />

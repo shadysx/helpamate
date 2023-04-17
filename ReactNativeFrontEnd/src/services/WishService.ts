@@ -5,12 +5,11 @@ export class WishService {
   route = "/Wishes"
 
   FetchWishes = async () => {
-    console.log(API + "/Wishes")
     try {
       const response = await fetch(API + this.route)
         .then(response => response.json())
       const data: Wish[] = response.data;
-      console.log("Fetch from WishService:", JSON.stringify(data, null, 2))
+      // console.log("Fetch from WishService:", JSON.stringify(data, null, 2))
 
       return data;
     } 
@@ -20,7 +19,6 @@ export class WishService {
   };
 
   FetchWishById = async (wishId: number) => {
-    console.log(API + this.route + '/' + wishId)
     try {
       const response = await fetch(API + this.route + '/' + wishId, {
         method: 'GET',
@@ -106,7 +104,6 @@ export class WishService {
       }
       
       const data = await response.text();
-      console.log(data)
 
       return data;
     }

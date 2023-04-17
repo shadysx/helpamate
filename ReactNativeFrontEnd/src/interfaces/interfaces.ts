@@ -22,7 +22,7 @@ interface Wish {
     id: number,
     title: string,
     description: string,
-    user: User
+    user?: User
 }
 
 interface WishCreationDTO {

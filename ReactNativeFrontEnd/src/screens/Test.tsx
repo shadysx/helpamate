@@ -30,20 +30,8 @@ const AddWish = () => {
     return (
         
       <SafeAreaView style={styles.container}>
-        <TextInput
-          style={styles.input}
-          placeholder="Title"
-          value={value.title}
-          onChangeText={(text) => setValue({...value, title: text})}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Description"
-          value={value.description}
-          onChangeText={(text) => setValue({...value, description: text})}
-        />
         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.buttonText}>Submit</Text>
+          <Text style={styles.buttonText}>AddWishes</Text>
         </TouchableOpacity>
       </SafeAreaView>
     );

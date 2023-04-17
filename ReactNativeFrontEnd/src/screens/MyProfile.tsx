@@ -9,11 +9,14 @@ import axios from 'axios';
 
 
 const MyProfile = ({ navigation }) => {
-    const {logout} = useContext(AuthContext)   
+    const {logout, userInfo} = useContext(AuthContext)   
 
     const handleLogout = () => {
         logout();
     };
+    useEffect(() => {
+        console.log("profile", userInfo)
+    })
 
   return (
     <SafeAreaView edges={["top"]} style={{flex:1}}>
@@ -24,11 +27,11 @@ const MyProfile = ({ navigation }) => {
             <Avatar 
                 label="Kent Dodds" 
                 size={120}
-                //image={{ uri: currentUser.avatarUrl }}
+                image={{ uri: userInfo?.avatarUrl }}
                 />
         </View>
         <View style={styles.userInfo}>
-            {/* <Text >Connected as {userToken}</Text> */}
+            <Text >Connected as {userInfo?.username}</Text>
         </View>
 
         <Button title="Logout" onPress={handleLogout} />

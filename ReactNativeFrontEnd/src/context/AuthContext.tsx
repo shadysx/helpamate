@@ -1,6 +1,7 @@
 import React, {createContext, useEffect, useState} from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { AuthService } from '../services/AuthService';
+import JWT from 'expo-jwt';
 
 type AuthContextType = {
     login: any,
@@ -14,7 +15,7 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({children}) => {
     const [isLoading, setIsLoading] = useState(false);
-    const [userInfo, setUserInfo] = useState(null);
+    const [userInfo, setUserInfo] = useState<User>(null);
     const [userToken, setUserToken] = useState(null);
     const authService = new AuthService();
 
@@ -22,11 +23,10 @@ export const AuthProvider = ({children}) => {
         setIsLoading(true);
         authService.Login(user)
         .then(res => {
-            let userInfo = res;
-            console.log("first", userInfo)
-            setUserInfo(userInfo);
-            setUserToken(userInfo.jwt);
-            AsyncStorage.setItem('userToken', userInfo.jwt);
+            console.log("userInfo ", res.user)
+            setUserInfo(res.user);
+            setUserToken(res.jwt);
+            AsyncStorage.setItem('userToken', res.jwt);
         })
         setIsLoading(false);
     }
@@ -41,13 +41,37 @@ export const AuthProvider = ({children}) => {
     const isLoggedIn = async () => {
         try {
             setIsLoading(true)
-            let userToken = await AsyncStorage.getItem('userToken');
-            setUserToken(userToken);
+            let localUserToken = await AsyncStorage.getItem('userToken');
+
+            if(!isTokenExpired(localUserToken)){
+                setUserToken(localUserToken)
+                console.log("Token EXP IS OK")
+            }
+            else {
+                setUserToken(null);
+                console.log("Token EXP IS NOT OK")
+            }
             setIsLoading(false);
         }
         catch (error) {
             console.log('isLogged in error ', error)
         }
+    }
+
+    // Need to be implemented on server side for security
+    const isTokenExpired = (localUserToken: string) : boolean =>  {
+        try {
+            const currentTime = new Date().getTime();
+            const decodedToken = JWT.decode(localUserToken, "My secret token API")
+            console.log("bool: ", decodedToken.exp > currentTime)
+            return decodedToken.exp > currentTime
+        }
+        catch (error){
+            if(error == "Error: Token has expired"){
+                return true
+            }
+        }
+
     }
 
     useEffect(() => {

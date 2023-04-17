@@ -9,7 +9,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 export default function App() {
   return (
-    <AuthProvider>
+    <AuthProvider>       
         <RootNavigation/>
     </AuthProvider>
 

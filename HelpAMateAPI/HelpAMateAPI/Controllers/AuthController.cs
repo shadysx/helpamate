@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using HelpAMateAPI.DataBase;
 using HelpAMateAPI.Models;
 using HelpAMateAPI.Models.DTO.User;
+using HelpAMateAPI.Models.DTO.Wish;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -54,7 +55,7 @@ public class AuthController : ControllerBase
     {
         
         // Check if exist
-        var existingUser = _dbContext.Users.FirstOrDefault(u => u.Username == request.Username);
+        var existingUser = _dbContext.Users.Include(u => u.Wishes).FirstOrDefault(u => u.Username == request.Username);
         
         if (existingUser == null)
         {
@@ -66,26 +67,41 @@ public class AuthController : ControllerBase
             return BadRequest("Wrong password");
         }
 
-        string token = CreateToken(existingUser);
-        return Ok(new {jwt = token});
-    }
+        UserDto user = new UserDto()
+        {
+            Email = existingUser.Email,
+            Username = existingUser.Username,
+            AvatarUrl = existingUser.AvatarUrl,
+            Wishes = existingUser.Wishes.Select(wish => new WishDto()
+            {
+                Id = wish.Id,
+                Title = wish.Title,
+                Description = wish.Description
+            })
+        };
+ 
 
+        string token = CreateToken(existingUser);
+        return Ok(new {jwt = token, user});
+    }
+    
     private string CreateToken(User user)
     {
         List<Claim> claims = new()
         {
             new Claim(ClaimTypes.Name, user.Username),
-            new Claim(ClaimTypes.Email, user.Email),
         };
 
         var key = new SymmetricSecurityKey(
             System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value));
+        
+        
 
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
             claims: claims,
-            expires: DateTime.Now.AddDays(1),
+            expires: DateTime.Now.AddHours(1),
             signingCredentials: creds);
 
         var jwt = new JwtSecurityTokenHandler().WriteToken(token);

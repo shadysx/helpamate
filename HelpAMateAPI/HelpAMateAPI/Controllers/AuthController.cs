@@ -74,7 +74,8 @@ public class AuthController : ControllerBase
     {
         List<Claim> claims = new()
         {
-            new Claim(ClaimTypes.Name, user.Username)
+            new Claim(ClaimTypes.Name, user.Username),
+            new Claim(ClaimTypes.Email, user.Email),
         };
 
         var key = new SymmetricSecurityKey(

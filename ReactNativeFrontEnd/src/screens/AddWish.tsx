@@ -1,13 +1,11 @@
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { WishService } from '../services/WishService';
-import { useAuth } from '../context/Auth';
+import { AuthContext } from '../context/AuthContext';
 
 
 const AddWish = () => {
-    const {currentUser, auth} = useAuth() 
-
     const [value, setValue] = useState<WishCreationDTO>({ title: 'New Wish', description: 'For user 3', userId: 3});
     const [value2, setValue2] = useState<WishUpdateDTO>({ id: 5, title: 'Hello', description: 'For wish5'});
     const wishService = new WishService()

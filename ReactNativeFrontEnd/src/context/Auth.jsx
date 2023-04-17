@@ -1,32 +1,32 @@
-import React, { useEffect, useState } from 'react'
-import { UserService } from '../services/UserService'
-import { AuthService } from '../services/AuthService'
+// import React, { useEffect, useState } from 'react'
+// import { UserService } from '../services/UserService'
+// import { AuthService } from '../services/AuthService'
 
 
-export const AuthContext = React.createContext()
+// export const AuthContext = React.createContext()
 
-export function useAuth() {
-  return React.useContext(AuthContext)
-}
+// export function useAuth() {
+//   return React.useContext(AuthContext)
+// }
 
-export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState()
+// export const AuthProvider = ({ children }) => {
+//   const [currentUser, setCurrentUser] = useState()
 
-  const authService = new AuthService()
+//   const authService = new AuthService()
 
-  const Login = () => {
-    
-  }
+//   const Login = () => {
+//     authService.Login()
+//   }
   
-  useEffect(() => {
+//   useEffect(() => {
    
-  },[])
+//   },[])
 
 
 
-  return (
-    <AuthContext.Provider value={{currentUser}}>
-      {children}
-    </AuthContext.Provider>
-  )
-}
+//   return (
+//     <AuthContext.Provider value={{currentUser}}>
+//       {children}
+//     </AuthContext.Provider>
+//   )
+// }

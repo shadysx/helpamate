@@ -5,11 +5,7 @@ import Swiper from 'react-native-swiper';
 
 const WishDetail = ({ route }) => {
   const { wish } = route.params;
-  const { title, description, user } = wish; // Destructure the wish object
-  const images = [
-        "https://images.saymedia-content.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzkxNDM3Nzg0Nzg2NTYy/twelve-signs-your-cat-really-loves-you.jpg",
-        "https://adultpaintbynumber.com/wp-content/uploads/2020/08/cute-baby-cat-with-blue-eyes-paint-by-numbers.jpg"
-    ]
+  const { title, description, user, wishPictures } = wish; // Destructure the wish object
 
   return (
 <SafeAreaView style={styles.container}>
@@ -26,9 +22,9 @@ const WishDetail = ({ route }) => {
       <View style={styles.swiperContainer}>
       <Text style={styles.title}>Images</Text>
       <Swiper style={styles.imageSlider} activeDotColor="#dddddd" dotColor="#333333">
-        {images.map((imageUrl, index) => (
+        {wishPictures.map((image, index) => (
           <View key={index} style={styles.imageContainer}>
-            <Image style={styles.image} source={{ uri: imageUrl }} />
+            <Image style={styles.image} source={{ uri: image.pictureUrl }} />
           </View>
         ))}
       </Swiper>

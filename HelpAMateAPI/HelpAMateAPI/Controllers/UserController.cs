@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using HelpAMateAPI.DataBase;
 using HelpAMateAPI.Models;
 using Microsoft.AspNetCore.Mvc;

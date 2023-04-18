@@ -24,4 +24,5 @@ public class DatabaseContext: DbContext
     
     public DbSet<Wish>? Wishes { get; set; }
     public DbSet<User>? Users { get; set; }
+    public DbSet<WishPicture>? WishPictures { get; set; }
 }

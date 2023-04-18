@@ -3,6 +3,7 @@ using System;
 using HelpAMateAPI.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HelpAMateAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230418164229_AddPicturesToWisheAndWishPictureEntity")]
+    partial class AddPicturesToWisheAndWishPictureEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,6 +86,7 @@ namespace HelpAMateAPI.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("PictureUrl")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int?>("WishId")
@@ -92,7 +96,7 @@ namespace HelpAMateAPI.Migrations
 
                     b.HasIndex("WishId");
 
-                    b.ToTable("WishPictures");
+                    b.ToTable("WishPicture");
                 });
 
             modelBuilder.Entity("HelpAMateAPI.Models.Wish", b =>
@@ -108,11 +112,9 @@ namespace HelpAMateAPI.Migrations
 
             modelBuilder.Entity("HelpAMateAPI.Models.WishPicture", b =>
                 {
-                    b.HasOne("HelpAMateAPI.Models.Wish", "Wish")
+                    b.HasOne("HelpAMateAPI.Models.Wish", null)
                         .WithMany("WishPictures")
                         .HasForeignKey("WishId");
-
-                    b.Navigation("Wish");
                 });
 
             modelBuilder.Entity("HelpAMateAPI.Models.User", b =>

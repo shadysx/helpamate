@@ -15,7 +15,7 @@ type AuthContextType = {
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({children}) => {
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [userInfo, setUserInfo] = useState<User>(null);
     const [userToken, setUserToken] = useState(null);
     const [error, setError] = useState("");
@@ -29,6 +29,7 @@ export const AuthProvider = ({children}) => {
             setUserInfo(res.user);
             setUserToken(res.jwt);
             AsyncStorage.setItem('userToken', res.jwt);
+            AsyncStorage.setItem('userInfo', JSON.stringify(res.user));
             setError("")
         })
         .catch(error => setError("Failed to connect, check credentials"));
@@ -46,9 +47,12 @@ export const AuthProvider = ({children}) => {
         try {
             setIsLoading(true)
             let localUserToken = await AsyncStorage.getItem('userToken');
+            let localUserInfo = JSON.parse(await AsyncStorage.getItem('userInfo'));
+            console.log("info", localUserInfo)
 
             if(!isTokenExpired(localUserToken)){
                 setUserToken(localUserToken)
+                setUserInfo(localUserInfo)
                 console.log("Token EXP IS OK")
             }
             else {

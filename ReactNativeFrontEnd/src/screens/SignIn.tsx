@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 const SignIn = ({ navigation }) => {
-  const {login, error} = useContext(AuthContext);
+  const {login, error, isLoading} = useContext(AuthContext);
 
   const [user, setUser] = useState<UserLoginDTO>({
     email: "shady2@gmail.com",

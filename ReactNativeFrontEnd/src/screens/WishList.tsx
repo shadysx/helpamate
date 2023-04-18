@@ -40,7 +40,6 @@ const WishList = ({navigation}) => {
                       </Text>
                     </View>
                   }
-
               />
           ))}
       </ScrollView>

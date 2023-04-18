@@ -131,6 +131,4 @@ public class AuthController : ControllerBase
             return computedHash.SequenceEqual(passwordHash);
         }
     }
-    
-    
 }

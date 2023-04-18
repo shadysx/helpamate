@@ -2,7 +2,7 @@ import { AuthContext } from '../context/AuthContext';
 import { View, ActivityIndicator } from 'react-native'
 import { useContext, useEffect } from 'react';
 import UnAuthStack from './unAuthStack';
-import AuthStack from './authStack';
+import AuthStack, { Main } from './mainStack';
 
 const RootNavigation = () => {
 
@@ -18,7 +18,7 @@ const RootNavigation = () => {
   return (
 
       <View style={{flex:1}}>
-        {userToken != null ? <AuthStack/> : <UnAuthStack/>}
+        {userToken != null ? <Main/> : <UnAuthStack/>}
       </View>
   
   )

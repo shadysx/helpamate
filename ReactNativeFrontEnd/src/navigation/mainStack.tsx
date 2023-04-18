@@ -13,9 +13,9 @@ import WishDetail from '../screens/WishDetail';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-export default function AuthStack() {
+export default function TabMenu() {
   return (
-    <NavigationContainer>
+
     <View style={{flex: 1}}>
         <Tab.Navigator
             screenOptions={({ route }) => ({
@@ -61,7 +61,6 @@ export default function AuthStack() {
             <Tab.Screen name="My Profile" component={MyProfile}options={{ headerShown: false }}/>
         </Tab.Navigator>
     </View>
-    </NavigationContainer>
   );
 }
 
@@ -71,10 +70,18 @@ const WishListStackScreen = () => (
     <WishListStack.Navigator>
       <WishListStack.Screen name="WishListStack" component={WishList} options={{ headerShown: false }}/>
       <WishListStack.Screen name="Test" component={Test}/>
-      <WishListStack.Screen name="WishDetail" component={WishDetail} options={{ 
-        headerShown: false, 
-        }}/>
     </WishListStack.Navigator>
   </View>
 
 )
+
+export const Main = () => (
+  <View style={{flex: 1, borderColor: 'red', borderRadius: 10 }}>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="TabMenu" component={TabMenu} options={{ headerShown: false }}/>
+        <Stack.Screen name="WishDetail" component={WishDetail} options={{ headerShown: false }}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+  </View>
+  );

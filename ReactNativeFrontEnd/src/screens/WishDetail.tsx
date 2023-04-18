@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Swiper from 'react-native-swiper';
 
@@ -7,9 +7,8 @@ const WishDetail = ({ route }) => {
   const { wish } = route.params;
   const { title, description, user } = wish; // Destructure the wish object
   const images = [
-    "https://mui.com/static/images/avatar/1.jpg",
-    "https://mui.com/static/images/avatar/2.jpg",
-    "https://mui.com/static/images/avatar/3.jpg"
+        "https://images.saymedia-content.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzkxNDM3Nzg0Nzg2NTYy/twelve-signs-your-cat-really-loves-you.jpg",
+        "https://adultpaintbynumber.com/wp-content/uploads/2020/08/cute-baby-cat-with-blue-eyes-paint-by-numbers.jpg"
     ]
 
   return (
@@ -25,8 +24,8 @@ const WishDetail = ({ route }) => {
       </View>
 
       <View style={styles.swiperContainer}>
-      <Text style={styles.title}>Images associées</Text>
-      <Swiper style={styles.imageSlider} dotColor="#dddddd" activeDotColor="#333333">
+      <Text style={styles.title}>Images</Text>
+      <Swiper style={styles.imageSlider} activeDotColor="#dddddd" dotColor="#333333">
         {images.map((imageUrl, index) => (
           <View key={index} style={styles.imageContainer}>
             <Image style={styles.image} source={{ uri: imageUrl }} />
@@ -34,10 +33,28 @@ const WishDetail = ({ route }) => {
         ))}
       </Swiper>
       </View>
+      <VoteBar onDownvote={() => {}} onHelp={() => {}} onUpvote={() => {}}/>
 
     </SafeAreaView>
   );
 };
+
+const VoteBar = ({ onDownvote, onHelp, onUpvote }) => {
+    return (
+      <View style={styles.voteBarContainer}>
+        <TouchableOpacity style={styles.buttonLeft} onPress={onDownvote}>
+          <Text style={styles.buttonText}>Downvote</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonMiddle} onPress={onHelp}>
+          <Text style={styles.buttonText}>Help</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonRight} onPress={onUpvote}>
+          <Text style={styles.buttonText}>Upvote</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+  
 
 const styles = StyleSheet.create({
     container: {
@@ -47,10 +64,11 @@ const styles = StyleSheet.create({
       marginBottom: 16,
     },
     contentContainer: {
-      height: 110,
+      height: 150,
       padding: 16,
     },
     swiperContainer: {
+        marginTop: 30,
         height: 500,
         padding: 16,
 
@@ -70,16 +88,17 @@ const styles = StyleSheet.create({
         height: '100%',
       },
     title: {
-      fontSize: 18,
+      fontSize: 22,
       fontWeight: 'bold',
       color: '#333333',
     },
     description: {
-      fontSize: 14,
+      fontSize: 18,
       color: '#666666',
       marginVertical: 8,
     },
     userContainer: {
+      marginTop: 10,
       flexDirection: 'row',
       alignItems: 'center',
     },
@@ -90,9 +109,45 @@ const styles = StyleSheet.create({
       marginRight: 8,
     },
     username: {
-      fontSize: 12,
+      fontSize: 17,
       color: '#999999',
     },
+    // VoteBar
+    voteBarContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+      },
+      buttonLeft: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: "#FFCCCB",
+        borderRadius: 10,
+        padding: 8,
+        margin: 16,
+      },
+      buttonMiddle: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: "lightblue",
+        borderRadius: 10,
+        padding: 8,
+        margin: 16,
+      },
+      buttonRight: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: "lightgreen",
+        borderRadius: 10,
+        padding: 8,
+        margin: 16,
+      },
+      buttonText: {
+        fontSize: 16,
+        color: '#333333',
+      },
   });
   
 export default WishDetail;

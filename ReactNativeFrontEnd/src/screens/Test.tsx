@@ -1,64 +1,110 @@
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useContext, useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { WishService } from '../services/WishService';
-import { AuthService } from '../services/AuthService';
-import { AuthContext } from '../context/AuthContext';
+import React from 'react';
+import {
+  View,
+  TextInput,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  ImageBackground,
+} from 'react-native';
 
-
-const AddWish = () => {
-    const [value, setValue] = useState<WishCreationDTO>({ title: 'New Wish', description: 'For user 3', userId: 3});
-    const [value2, setValue2] = useState<WishUpdateDTO>({ id: 5, title: 'Hello', description: 'For wish5'});
-    const wishService = new WishService()
-    const authService = new AuthService()
- 
-    const {login} = useContext(AuthContext);
-
-    const handleSubmit = async () => {
-      //console.log(value)
-      //wishService.CreateWish(value)
-      //wishService.UpdateWish(value2)
-      //wishService.FetchWishById(12)
-      //const user : UserRegisterDTO = {email: 'shady2@gmail.com', username: "shady2", password: "azerty"}
-      const user : UserLoginDTO = {username: "shady2", password: "azerty"}
-      const response = await login(user);
-      console.log("testeee", response)
-
-      
-    };
-  
-    return (
-        
-      <SafeAreaView style={styles.container}>
-        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.buttonText}>AddWishes</Text>
+const LoginScreen = () => {
+  return (
+    <ImageBackground
+      source={require('../../assets/ice.jpeg')}
+      style={styles.container}
+    >
+      <View style={styles.loginContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          keyboardType="email-address"
+          placeholderTextColor="#777"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          secureTextEntry
+          placeholderTextColor="#777"
+        />
+        <TouchableOpacity style={styles.buttonContainer}>
+          <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
-      </SafeAreaView>
-    );
-  };
-  
-  const styles = StyleSheet.create({
-    container: {
-      padding: 20,
-    },
-    input: {
-      height: 40,
-      borderColor: 'gray',
-      borderWidth: 1,
-      borderRadius: 5,
-      padding: 10,
-      marginBottom: 10,
-    },
-    button: {
-      backgroundColor: 'blue',
-      borderRadius: 5,
-      padding: 10,
-      alignItems: 'center',
-    },
-    buttonText: {
-      color: 'white',
-    },
-  });
-  
+        <TouchableOpacity style={styles.forgotPasswordContainer}>
+          <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.signupContainer}>
+        <Text style={styles.signupText}>Don't have an account?</Text>
+        <TouchableOpacity style={styles.signupButtonContainer}>
+          <Text style={styles.signupButtonText}>Sign up</Text>
+        </TouchableOpacity>
+      </View>
+    </ImageBackground>
+  );
+};
 
-export default AddWish
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loginContainer: {
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    padding: 20,
+    borderRadius: 10,
+    width: '80%',
+    maxWidth: 400,
+    alignItems: 'center',
+  },
+  input: {
+    width: '100%',
+    height: 50,
+    backgroundColor: '#fff',
+    borderRadius: 25,
+    paddingHorizontal: 20,
+    marginBottom: 15,
+    color: '#333',
+  },
+  buttonContainer: {
+    width: '100%',
+    height: 50,
+    backgroundColor: '#007BFF',
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+  },
+  forgotPasswordContainer: {
+    alignSelf: 'flex-end',
+    marginBottom: 15,
+  },
+  forgotPasswordText: {
+    color: '#777',
+    fontSize: 14,
+  },
+  signupContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 15,
+  },
+  signupText: {
+    color: '#777',
+    fontSize: 14,
+  },
+  signupButtonContainer: {
+    marginLeft: 5,
+  },
+  signupButtonText: {
+    color: '#007BFF',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+});
+
+export default LoginScreen;

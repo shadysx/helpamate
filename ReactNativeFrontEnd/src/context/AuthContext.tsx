@@ -8,7 +8,8 @@ type AuthContextType = {
     logout: any,
     isLoading: boolean,
     userToken: string,
-    userInfo: any
+    userInfo: any,
+    error: string
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);
@@ -17,6 +18,7 @@ export const AuthProvider = ({children}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [userInfo, setUserInfo] = useState<User>(null);
     const [userToken, setUserToken] = useState(null);
+    const [error, setError] = useState("");
     const authService = new AuthService();
 
     const login = (user: UserLoginDTO) => {
@@ -27,7 +29,9 @@ export const AuthProvider = ({children}) => {
             setUserInfo(res.user);
             setUserToken(res.jwt);
             AsyncStorage.setItem('userToken', res.jwt);
+            setError("")
         })
+        .catch(error => setError("Failed to connect, check credentials"));
         setIsLoading(false);
     }
 
@@ -80,7 +84,7 @@ export const AuthProvider = ({children}) => {
 
 
     return (
-        <AuthContext.Provider value={{login, logout, isLoading, userToken, userInfo}}>
+        <AuthContext.Provider value={{login, logout, isLoading, userToken, userInfo, error}}>
             {children}
         </AuthContext.Provider>
     )

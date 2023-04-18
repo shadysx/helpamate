@@ -8,7 +8,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 const WishList = ({navigation}) => {
   const [wishes, setWishes] = useState<Wish[]>([]);
-  const wishRanking = 12;
+  const wishRanking = 7;
   useEffect(() => {
     const fetchWishes = async () => {
       const wishService = new WishService();
@@ -34,9 +34,9 @@ const WishList = ({navigation}) => {
                   }
                   trailing={
                     <View style={styles.trailingItemContainer}>
-                      <MaterialIcons name={wishRanking > 0 ? "arrow-upward" : "arrow-downward"} size={24} color={wishRanking > 0 ? "green" : "red"}/>
-                      <Text style={{color: wishRanking > 0 ? "green" : "red"}}>
-                        {wishRanking > 0 ? `+${wishRanking}` : wishRanking}
+                      <MaterialIcons name={wishRanking >= 0 ? "arrow-upward" : "arrow-downward"} size={24} color={wishRanking >= 0 ? "green" : "red"}/>
+                      <Text style={{color: wishRanking >= 0 ? "green" : "red"}}>
+                        {wishRanking >= 0 ? `+${wishRanking}` : wishRanking}
                       </Text>
                     </View>
                   }

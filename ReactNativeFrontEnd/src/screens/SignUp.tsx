@@ -14,9 +14,9 @@ import {
 
 const SignupScreen = ({ navigation }) => {
   const [user, setUser] = useState<UserRegisterDTO>({
-    email: "shady4@gmail.com",
-    username: "shady4",
-    password: "azerty"
+    email: "",
+    username: "",
+    password: ""
   })
 
   async function handleSignUp() {
@@ -68,25 +68,6 @@ const SignupScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
     </ImageBackground>
-    // <View style={styles.container}>
-    //   <TextInput
-    //     style={styles.input}
-    //     placeholder="Email"
-    //     value={value.email}
-    //     onChangeText={(text) => setValue({ ...value, email: text })}
-    //     autoCapitalize="none"
-    //     keyboardType="email-address"
-    //   />
-    //   <TextInput
-    //     style={styles.input}
-    //     placeholder="Password"
-    //     value={value.password}
-    //     onChangeText={(text) => setValue({ ...value, password: text })}
-    //     secureTextEntry
-    //   />
-    //   <Button title="Sign up" onPress={handleSignUp} />
-    //   <Button title="Already have an account?" onPress={() => navigation.navigate("SignIn")} />
-    // </View>
   );
 };
 

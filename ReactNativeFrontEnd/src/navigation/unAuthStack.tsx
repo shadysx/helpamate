@@ -1,4 +1,4 @@
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
 //Screens
@@ -13,24 +13,27 @@ const Stack = createStackNavigator();
 export default function UnAuthStack() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          ...TransitionPresets.ModalFadeTransition
+        }}
+      >
       {/* <Stack.Screen
           name="Test"
           component={Test}
           options={{ headerShown: false  }}
         /> */}
+        <Stack.Screen
+          name="Welcome"
+          component={Welcome}
+          options={{ headerShown: false  }}
+        />
       <Stack.Screen
           name="SignIn"
           component={SignIn}
           options={{ headerShown: false  }}
         />
       <Stack.Screen
-        name="Welcome"
-        component={Welcome}
-        options={{ headerShown: false  }}
-      />
-
-        <Stack.Screen
           name="SignUp"
           component={SignUp}
           options={{ headerShown: false  }}

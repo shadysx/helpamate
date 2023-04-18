@@ -8,6 +8,7 @@ import React from 'react';
 import MyProfile from '../screens/MyProfile';
 import WishList from '../screens/WishList';
 import AddWish from '../screens/AddWish';
+import Test from '../screens/Test';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -54,13 +55,22 @@ export default function AuthStack() {
             tabBarActiveTintColor: 'tomato',
             })}
         >
-            <Tab.Screen name="Wishes" component={WishList} options={{ headerShown: false }}/>
+            <Tab.Screen name="Wishes" component={WishListStackScreen} options={{ headerShown: false }}/>
             <Tab.Screen name="Add" component={AddWish} options={{ headerShown: false }}/>
             <Tab.Screen name="My Profile" component={MyProfile}options={{ headerShown: false }}/>
         </Tab.Navigator>
     </View>
     </NavigationContainer>
-    
-
   );
 }
+
+const WishListStack = createStackNavigator();
+const WishListStackScreen = () => (
+  <View style={{flex: 1}}>
+    <WishListStack.Navigator>
+      <WishListStack.Screen name="WishListStack" component={WishList} options={{ headerShown: false }}/>
+      <WishListStack.Screen name="Test" component={Test}/>
+    </WishListStack.Navigator>
+  </View>
+
+)

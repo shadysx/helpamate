@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { WishService } from "../services/WishService";
 import { View, Text } from "react-native";
 
-const WishList = () => {
+const WishList = ({navigation}) => {
   const [wishes, setWishes] = useState<Wish[]>([]);
   useEffect(() => {
     const fetchWishes = async () => {
@@ -25,6 +25,7 @@ const WishList = () => {
                   leadingMode="avatar"
                   title={wish.user.email}
                   secondaryText={wish.description}
+                  onPress={() => navigation.navigate("Test")}
                   leading={
                       <Avatar image={{ uri: wish.user.avatarUrl }} />
                   }

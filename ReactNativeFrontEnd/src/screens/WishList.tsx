@@ -23,9 +23,9 @@ const WishList = ({navigation}) => {
               <ListItem
                   key={index}
                   leadingMode="avatar"
-                  title={wish.user.email}
+                  title={wish.user.username}
                   secondaryText={wish.description}
-                  onPress={() => navigation.navigate("Test")}
+                  onPress={() => navigation.navigate("WishDetail", { wish })}
                   leading={
                       <Avatar image={{ uri: wish.user.avatarUrl }} />
                   }

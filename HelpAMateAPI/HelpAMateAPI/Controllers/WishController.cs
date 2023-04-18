@@ -35,6 +35,7 @@ public class WishController : ControllerBase
             Description = w.Description,
             User = new UserDto(){
                 Id = w.User.Id,
+                Username = w.User.Username,
                 Email = w.User.Email,
                 AvatarUrl = w.User.AvatarUrl
             }
@@ -61,6 +62,7 @@ public class WishController : ControllerBase
             User = new UserDto()
             {
                 Id = wish.User.Id,
+                Username = wish.User.Username,
                 Email = wish.User.Email,
                 AvatarUrl = wish.User.AvatarUrl
             }

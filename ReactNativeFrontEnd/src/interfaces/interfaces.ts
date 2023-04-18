@@ -2,6 +2,7 @@
 
 interface User {
     id?: number
+    username: string,
     email: string,
     avatarUrl: string,
     wishes?: Wish[]
@@ -14,7 +15,7 @@ interface UserRegisterDTO {
 }
 
 interface UserLoginDTO {
-    username: string,
+    email: string,
     password: string
 }
 

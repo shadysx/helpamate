@@ -55,7 +55,7 @@ public class AuthController : ControllerBase
     {
         
         // Check if exist
-        var existingUser = _dbContext.Users.Include(u => u.Wishes).FirstOrDefault(u => u.Username == request.Username);
+        var existingUser = _dbContext.Users.Include(u => u.Wishes).FirstOrDefault(u => u.Email == request.Email);
         
         if (existingUser == null)
         {

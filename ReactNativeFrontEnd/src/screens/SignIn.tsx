@@ -15,7 +15,7 @@ const SignIn = ({ navigation }) => {
   const {login, error} = useContext(AuthContext);
 
   const [user, setUser] = useState<UserLoginDTO>({
-    username: "shady2",
+    email: "shady2@gmail.com",
     password: "azerty"
   });
 
@@ -33,9 +33,9 @@ const SignIn = ({ navigation }) => {
         {error != "" ? <Text style={{color: 'orange', marginBottom: 20}}>{error}</Text> : null}
         <TextInput
           style={styles.input}
-          value={user.username}
-          onChangeText={(text) => setUser({...user, username: text})}
-          placeholder="Username"
+          value={user.email}
+          onChangeText={(text) => setUser({...user, email: text})}
+          placeholder="Email"
           placeholderTextColor="#777"
         />
         <TextInput

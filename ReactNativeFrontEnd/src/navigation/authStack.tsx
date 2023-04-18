@@ -9,6 +9,7 @@ import MyProfile from '../screens/MyProfile';
 import WishList from '../screens/WishList';
 import AddWish from '../screens/AddWish';
 import Test from '../screens/Test';
+import WishDetail from '../screens/WishDetail';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -70,6 +71,9 @@ const WishListStackScreen = () => (
     <WishListStack.Navigator>
       <WishListStack.Screen name="WishListStack" component={WishList} options={{ headerShown: false }}/>
       <WishListStack.Screen name="Test" component={Test}/>
+      <WishListStack.Screen name="WishDetail" component={WishDetail} options={{ 
+        headerShown: false, 
+        }}/>
     </WishListStack.Navigator>
   </View>
 

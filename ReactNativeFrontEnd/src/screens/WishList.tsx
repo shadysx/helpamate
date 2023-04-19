@@ -5,19 +5,30 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { WishService } from "../services/WishService";
 import { View, Text, StyleSheet } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
+import { useIsFocused } from '@react-navigation/native';
+
 
 const WishList = ({navigation}) => {
   const [wishes, setWishes] = useState<Wish[]>([]);
   const wishRanking = 7;
-  useEffect(() => {
-    const fetchWishes = async () => {
-      const wishService = new WishService();
-      const fetchedWishes : Wish[] | null = await wishService.FetchWishes();
-      setWishes(fetchedWishes);
+  const isFocused = useIsFocused();
 
-    };
+
+  useEffect(() => {
     fetchWishes();
   }, []);
+
+  useEffect(() => {
+    if (isFocused) {
+      fetchWishes();
+    }
+  }, [isFocused]);
+
+  const fetchWishes = async () => {
+    const wishService = new WishService();
+    const fetchedWishes : Wish[] | null = await wishService.FetchWishes();
+    setWishes(fetchedWishes);
+  };
   return (
     <>
     <SafeAreaView edges={["top"]}>

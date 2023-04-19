@@ -31,7 +31,8 @@ interface Wish {
 interface WishCreationDTO {
     title: string,
     description: string,
-    userId: number
+    userId: number,
+    wishPictures?: Picture[] 
 }
 
 interface WishUpdateDTO {
@@ -42,5 +43,9 @@ interface WishUpdateDTO {
 
 interface WishPicture {
     id: number,
+    pictureUrl: string
+}
+
+interface Picture {
     pictureUrl: string
 }

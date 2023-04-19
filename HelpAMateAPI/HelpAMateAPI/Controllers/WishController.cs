@@ -98,11 +98,17 @@ public class WishController : ControllerBase
             return BadRequest(ModelState);
         }
 
+        var wishPictures = model.WishPictures.Select(wishPicture => new WishPicture
+        {
+            PictureUrl = wishPicture.PictureUrl
+            // Map other properties from WishPictureCreationDto to WishPicture as needed
+        }).ToList();
         var wish = new Wish
         {
             Title = model.Title,
             Description = model.Description,
-            UserId = model.UserId    
+            UserId = model.UserId,
+            WishPictures = wishPictures
         };
 
         _dbContext.Wishes?.Add(wish);

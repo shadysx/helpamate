@@ -44,6 +44,7 @@ export class WishService {
 
   CreateWish = async (wish: WishCreationDTO) => {
     console.log(API + this.route)
+    console.log('sending in create service, ', JSON.stringify(wish, null, 2))
     try {
       const response = await fetch(API + this.route, {
         method: 'POST',

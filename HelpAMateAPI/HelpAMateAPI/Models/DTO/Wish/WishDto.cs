@@ -11,6 +11,6 @@ public class WishDto : IDto
     public string? Title { get; set; }
     public string? Description { get; set; }
     public UserDto? User { get; set; }
-    public IEnumerable<WishPictureDto>? WishPictures {get; set; }
+    public ICollection<WishPictureDto>? WishPictures {get; set; }
     
 }

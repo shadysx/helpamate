@@ -1,24 +1,33 @@
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { WishService } from '../services/WishService';
 import { AuthContext } from '../context/AuthContext';
+import MutipleImagePicker from '../components/MutipleImagePicker';
 
 
 const AddWish = () => {
-    const [value, setValue] = useState<WishCreationDTO>({ title: 'New Wish', description: 'For user 3', userId: 3});
-    const [value2, setValue2] = useState<WishUpdateDTO>({ id: 5, title: 'Hello', description: 'For wish5'});
+    const [images, setImages] = useState<Picture[]>(null);
+    const [value, setValue] = useState<WishCreationDTO>({ title: 'Wish with pictures', description: 'For user 10', userId: 10, wishPictures: images});
+
     const wishService = new WishService()
  
-
-
     const handleSubmit = () => {
-        console.log(value)
-      //wishService.CreateWish(value)
-      //wishService.UpdateWish(value2)
-      wishService.FetchWishById(12)
+        wishService.CreateWish(value);
     };
+
+    const handleImageChanged = (data) => {
+      // const image = data.map((img : WishPictureCreationDto) =>  img)
+      // console.log("eeee", JSON.stringify(image, null, 2))
+      setImages(data)
+      console.log(JSON.stringify(data, null, 2))
+    }
   
+    useEffect(() => {
+      // Update the value state with the latest images state
+      setValue({ ...value, wishPictures: images });
+    }, [images]);
+    
     return (
         
       <SafeAreaView style={styles.container}>
@@ -34,6 +43,7 @@ const AddWish = () => {
           value={value.description}
           onChangeText={(text) => setValue({...value, description: text})}
         />
+        <MutipleImagePicker onImageChanged={handleImageChanged}/>
         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>

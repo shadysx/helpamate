@@ -21,20 +21,23 @@ export const AuthProvider = ({children}) => {
     const [error, setError] = useState("");
     const authService = new AuthService();
 
-    const login = (user: UserLoginDTO) => {
+    const login = async (user: UserLoginDTO) => {
         setIsLoading(true);
-        authService.Login(user)
-        .then(res => {
-            console.log("userInfo ", res.user)
-            setUserInfo(res.user);
-            setUserToken(res.jwt);
-            AsyncStorage.setItem('userToken', res.jwt);
-            AsyncStorage.setItem('userInfo', JSON.stringify(res.user));
-            setError("")
-        })
-        .catch(error => setError("Failed to connect, check credentials"));
+        setError("");
+      
+        try {
+          const res = await authService.Login(user);
+          console.log("userInfo ", res.user);
+          setUserInfo(res.user);
+          setUserToken(res.jwt);
+          AsyncStorage.setItem('userToken', res.jwt);
+          AsyncStorage.setItem('userInfo', JSON.stringify(res.user));
+        } catch (error) {
+          setError("Failed to connect, check credentials");
+        }
+      
         setIsLoading(false);
-    }
+      };
 
     const logout = () => {
         setIsLoading(true);

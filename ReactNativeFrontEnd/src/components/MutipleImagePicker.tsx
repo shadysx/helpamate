@@ -16,7 +16,7 @@ const MutipleImagePicker = ({ onImageChanged }) => {
       });
 
       if (!result.canceled) {
-        let selectedImages = result.assets.map(asset => ({ pictureUrl: asset.uri})); 
+        let selectedImages = result.assets.map(asset => asset.uri); 
         onImageChanged(selectedImages)
       }
     }

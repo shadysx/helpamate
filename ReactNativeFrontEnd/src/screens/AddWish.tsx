@@ -1,30 +1,49 @@
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { WishService } from '../services/WishService';
 import { AuthContext } from '../context/AuthContext';
 import MutipleImagePicker from '../components/MutipleImagePicker';
+import { uploadImageAsync } from '../config/firebase';
 
 
 const AddWish = () => {
-    const [images, setImages] = useState<Picture[]>(null);
-    const [value, setValue] = useState<WishCreationDTO>({ title: 'Wish with pictures', description: 'For user 10', userId: 10, wishPictures: images});
-
+    const [cacheImagesURI, setCacheImagesURI] = useState<string[]>(null);
+    const [value, setValue] = useState({ title: 'Wish with pictures', description: 'For user 10', userId: 10});
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    
     const wishService = new WishService()
- 
-    const handleSubmit = () => {
-        wishService.CreateWish(value);
+    
+    const handleSubmit = async () => {
+      setIsLoading(true)
+      // Upload all images that are in the cache to firebase, and return a promise with all the Picture models
+      const promises = cacheImagesURI.map(async (uri: string, index: number) => {
+        const firebasePicture: Picture = { pictureUrl: await uploadImageAsync(uri) };
+        return firebasePicture;
+      })
+
+      //Waiting for the images to be uploaded
+      const resolvedImages: Picture[] = await Promise.all(promises);
+
+      // Creating the actual wish
+      const wish: WishCreationDTO = {title: value.title, description: value.description, userId: value.userId, wishPictures: resolvedImages}
+      wishService.CreateWish(wish)
+      console.log("sent ",JSON.stringify(wish, null, 2)) // This line value is null and shouldnt be 
+      setIsLoading(false)
     };
 
-    const handleImageChanged = (data) => {
-      setImages(data)
-      console.log(JSON.stringify(data, null, 2))
+    // When the picker is used
+    const handleImageChanged = (data: string[]) => {
+      setCacheImagesURI(data);
     }
-  
-    useEffect(() => {
-      // Update the value state with the latest images state
-      setValue({ ...value, wishPictures: images });
-    }, [images]);
+
+    if(isLoading){
+      return (
+        <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+          <ActivityIndicator size={'large'}/>
+        </View>
+      )
+    } 
     
     return (
         

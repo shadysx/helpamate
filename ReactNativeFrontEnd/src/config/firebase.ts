@@ -2,6 +2,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from "firebase/auth";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { v4 as uuidv4 } from 'uuid';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -41,13 +42,11 @@ export async function uploadImageAsync(uri) {
     xhr.send(null);
   });
 
-  const fileRef = ref(getStorage(), "image");
-  const result = await uploadBytes(fileRef, blob)  // We're done with the blob, close and release it
-  console.log("result", result)
+  const fileName = `wish/wish_image_${uuidv4()}`;
+  const fileRef = ref(getStorage(), fileName);
+  await uploadBytes(fileRef, blob)  // We're done with the blob, close and release it
   blob.close();
   
-  let downloadURL = await getDownloadURL(fileRef);
-  console.log("result", downloadURL)
   return await getDownloadURL(fileRef)
 
   }

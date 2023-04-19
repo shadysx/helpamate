@@ -20,7 +20,7 @@ const ImagePickerExample = ({navigation}) => {
 
       if (!result.canceled) {
         setImage(result.assets[0].uri); 
-        await uploadImageAsync(result.assets[0].uri)
+
       }
     }
     catch(error) {

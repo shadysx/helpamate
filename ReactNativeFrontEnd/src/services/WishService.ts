@@ -9,7 +9,6 @@ export class WishService {
       const response = await fetch(API + this.route)
         .then(response => response.json())
       const data: Wish[] = response.data;
-      console.log("Fetch from WishService:", JSON.stringify(data, null, 2))
 
       return data;
     } 
@@ -32,8 +31,6 @@ export class WishService {
       }
       
       const data = await response.json();
-
-      console.log(data)
   
       return data;
     }

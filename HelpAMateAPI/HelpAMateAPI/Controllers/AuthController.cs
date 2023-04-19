@@ -74,6 +74,7 @@ public class AuthController : ControllerBase
 
         UserDto user = new UserDto()
         {
+            Id = existingUser.Id,
             Email = existingUser.Email,
             Username = existingUser.Username,
             AvatarUrl = existingUser.AvatarUrl,

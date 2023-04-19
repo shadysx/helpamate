@@ -9,7 +9,6 @@ const WishDetail = ({ route }) => {
 
   return (
 <SafeAreaView style={styles.container}>
-
       <View style={styles.contentContainer}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{description}</Text>
@@ -30,7 +29,6 @@ const WishDetail = ({ route }) => {
       </Swiper>
       </View>
       <VoteBar onDownvote={() => {}} onHelp={() => {}} onUpvote={() => {}}/>
-
     </SafeAreaView>
   );
 };
@@ -54,7 +52,6 @@ const VoteBar = ({ onDownvote, onHelp, onUpvote }) => {
 
 const styles = StyleSheet.create({
     container: {
-      backgroundColor: '#ffffff',
       borderRadius: 10,
       flex: 1,
       marginBottom: 16,

@@ -8,7 +8,7 @@ type AuthContextType = {
     logout: any,
     isLoading: boolean,
     userToken: string,
-    userInfo: any,
+    userInfo: User,
     error: string
 }
 
@@ -27,9 +27,9 @@ export const AuthProvider = ({children}) => {
       
         try {
           const res = await authService.Login(user);
-          console.log("userInfo ", res.user);
           setUserInfo(res.user);
           setUserToken(res.jwt);
+          console.log(JSON.stringify(res.user, null, 2))
           AsyncStorage.setItem('userToken', res.jwt);
           AsyncStorage.setItem('userInfo', JSON.stringify(res.user));
         } catch (error) {
@@ -51,16 +51,15 @@ export const AuthProvider = ({children}) => {
             setIsLoading(true)
             let localUserToken = await AsyncStorage.getItem('userToken');
             let localUserInfo = JSON.parse(await AsyncStorage.getItem('userInfo'));
-            console.log("info", localUserInfo)
 
             if(!isTokenExpired(localUserToken)){
                 setUserToken(localUserToken)
                 setUserInfo(localUserInfo)
-                console.log("Token EXP IS OK")
+                console.log("LoggedIn")
             }
             else {
                 setUserToken(null);
-                console.log("Token EXP IS NOT OK")
+                console.log("LoggedOut")
             }
             setIsLoading(false);
         }
@@ -74,7 +73,6 @@ export const AuthProvider = ({children}) => {
         try {
             const currentTime = new Date().getTime();
             const decodedToken = JWT.decode(localUserToken, "My secret token API")
-            console.log("bool: ", decodedToken.exp > currentTime)
             return decodedToken.exp > currentTime
         }
         catch (error){

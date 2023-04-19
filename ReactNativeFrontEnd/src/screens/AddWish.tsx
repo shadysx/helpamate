@@ -5,18 +5,25 @@ import { WishService } from '../services/WishService';
 import { AuthContext } from '../context/AuthContext';
 import MutipleImagePicker from '../components/MutipleImagePicker';
 import { uploadImageAsync } from '../config/firebase';
+import { MaterialIcons } from '@expo/vector-icons';
+import ImagePlaceHolder from '../components/ImagePlaceHolder';
+import { pickImage } from '../helpers/Utils';
+
 
 
 const AddWish = ({navigation}) => {
     const [cacheImagesURI, setCacheImagesURI] = useState<string[]>([]);
-    const [value, setValue] = useState({ title: 'Wish with pictures', description: 'For user 10', userId: 10});
+    const [value, setValue] = useState({ title: '', description: ''});
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    
+
+    const {userInfo} = useContext(AuthContext);
+
     const wishService = new WishService()
     
+    const isSubmitEnabled = value.title.length > 0 && value.description.length > 0 && cacheImagesURI.length > 0;
+
     const handleSubmit = async () => {
       try {
-        if(cacheImagesURI.length === 0)
         setIsLoading(true)
         // Upload all images that are in the cache to firebase, and return a promise with all the Picture models
         const promises = cacheImagesURI.map(async (uri: string, index: number) => {
@@ -28,9 +35,15 @@ const AddWish = ({navigation}) => {
         const resolvedImages: Picture[] = await Promise.all(promises);
   
         // Creating the actual wish
-        const wish: WishCreationDTO = {title: value.title, description: value.description, userId: value.userId, wishPictures: resolvedImages}
+        const wish: WishCreationDTO = {title: value.title, description: value.description, userId: userInfo.id, wishPictures: resolvedImages}
         await wishService.CreateWish(wish)
         setIsLoading(false)
+
+        // Reset the forms
+        setValue({ title: '', description: ''})
+        setCacheImagesURI([])
+
+        // Go to wishes
         navigation.navigate("Wishes")
       }
       catch (error){
@@ -39,20 +52,23 @@ const AddWish = ({navigation}) => {
       }
     };
 
-    // When the picker is used
-    const handleImageChanged = (data: string[]) => {
-      setCacheImagesURI(data);
+    useEffect(() => {
+      console.log(isLoading)
+    },[isLoading])
+
+    const handleAddImage = async (index) => {
+      const selectedImage: string = await pickImage() 
+      setCacheImagesURI((prevCacheImagesURI) => [...prevCacheImagesURI, selectedImage]);
     }
 
-    const ImagePreview = ({ images }) => {
-      return (
-        <View style={styles.imageContainer}>
-          {images.map((uri, index) => (
-            <Image key={index} source={{ uri }} style={styles.previewImage} />
-          ))}
-        </View>
-      );
-    };
+
+    
+    const handleDeleteImage = (indexToRemove) => {
+      console.log("Delete image at : ", indexToRemove)
+      setCacheImagesURI((prevCacheImagesURI) =>
+      prevCacheImagesURI.filter((_, index) => index !== indexToRemove)
+    );
+    }
 
     if(isLoading){
       return (
@@ -64,70 +80,93 @@ const AddWish = ({navigation}) => {
     
     return (
         
-      <SafeAreaView style={styles.container}>
-        <View>
-          
-          <TextInput
-            style={styles.input}
-            placeholder="Title"
-            value={value.title}
-            onChangeText={(text) => setValue({...value, title: text})}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Description"
-            value={value.description}
-            onChangeText={(text) => setValue({...value, description: text})}
-          />
-          <MutipleImagePicker onImageChanged={handleImageChanged}/>
-          <ImagePreview images={cacheImagesURI} />
+      <View style={styles.container}>
+      <View>
+        <View style={styles.topRow}>
+          <Text style={styles.label}>Title</Text>
+          <Button onPress={() => navigation.goBack()} title="Cancel" />
         </View>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter title"
+          value={value.title}
+          onChangeText={(text) => setValue({...value, title: text})}
+        />
+        <Text style={styles.label}>Description</Text>
+        <TextInput
+          editable
+          multiline // Add this prop
+          numberOfLines={4} // Add this prop and set the desired number of lines
+          style={styles.inputArea}
+          placeholder="Enter description"
+          value={value.description}
+          onChangeText={(text) => setValue({...value, description: text})}
+          maxLength={140}
+        />
+        <Text style={styles.label}>Add Images</Text>
+        <ImagePlaceHolder images={cacheImagesURI} numberOfImages={3} onAdd={handleAddImage} onDelete={handleDeleteImage}  />
+      </View>
 
-        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.buttonText}>Submit</Text>
-        </TouchableOpacity>
-      </SafeAreaView>
+      <TouchableOpacity style={[styles.button]} onPress={handleSubmit} disabled={!isSubmitEnabled}>
+        <Text style={styles.buttonText}>Submit</Text>
+      </TouchableOpacity>
+    </View>
     );
   };
   
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       padding: 20,
       borderRadius: 10,
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
+      backgroundColor: '#FAFAFA',
     },
-    inputSection: {
-
+    topRow: {
+      flexDirection: "row",
+      alignItems: 'center',
+      justifyContent: "space-between"
+    },
+    label: {
+      fontSize: 16,
+      fontWeight: '600',
+      marginBottom: 5,
+      color: '#333',
     },
     input: {
-      height: 40,
-      borderColor: 'gray',
+      maxHeight: 160,
+      borderColor: '#B3B3B3',
       borderWidth: 1,
       borderRadius: 5,
       padding: 10,
-      marginBottom: 10,
+      marginBottom: 20,
+      backgroundColor: '#FFF',
+      fontSize: 16,
+      textAlignVertical: 'top', // Add this to align the text at the top in Android devices
+    },
+    inputArea: {
+      height: 120,
+      borderColor: '#B3B3B3',
+      borderWidth: 1,
+      borderRadius: 5,
+      padding: 10,
+      marginBottom: 20,
+      backgroundColor: '#FFF',
+      fontSize: 16,
+      textAlignVertical: 'top', // Add this to align the text at the top in Android devices
     },
     button: {
-      backgroundColor: 'orange',
+      backgroundColor: '#FFA07A',
       borderRadius: 5,
       padding: 10,
       alignItems: 'center',
+      marginBottom: 20
     },
     buttonText: {
       color: 'white',
-    },
-    imageContainer: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      // justifyContent: 'center',
-      marginTop: 10,
-    },
-    previewImage: {
-      width: 100,
-      height: 100,
-      borderRadius: 5,
-      margin: 5,
+      fontSize: 16,
+      fontWeight: '600',
     },
   });
   

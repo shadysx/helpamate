@@ -4,8 +4,6 @@ import { Avatar } from "@react-native-material/core";
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AuthContext } from '../context/AuthContext';
-import { signOut } from 'firebase/auth';
-import axios from 'axios';
 
 
 const MyProfile = ({ navigation }) => {
@@ -14,9 +12,6 @@ const MyProfile = ({ navigation }) => {
     const handleLogout = () => {
         logout();
     };
-    useEffect(() => {
-        console.log("profile", userInfo)
-    })
 
   return (
     <SafeAreaView edges={["top"]} style={{flex:1}}>
@@ -35,6 +30,7 @@ const MyProfile = ({ navigation }) => {
         </View>
 
         <Button title="Logout" onPress={handleLogout} />
+        <Button title="AddWish" onPress={() => navigation.navigate("AddWish")} />
     </SafeAreaView>
   )
 }

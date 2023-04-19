@@ -6,6 +6,7 @@ import { WishService } from "../services/WishService";
 import { View, Text, StyleSheet } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
 import { useIsFocused } from '@react-navigation/native';
+import HeaderBanner from "../components/HeaderBanner";
 
 
 const WishList = ({navigation}) => {
@@ -31,7 +32,8 @@ const WishList = ({navigation}) => {
   };
   return (
     <>
-    <SafeAreaView edges={["top"]}>
+    <View style={styles.container}>
+      <HeaderBanner onPressAddWish={() => {navigation.navigate("AddWish")}}/>
       <ScrollView>
           {wishes?.map((wish: Wish, index: number)=> (
               <ListItem
@@ -54,7 +56,7 @@ const WishList = ({navigation}) => {
               />
           ))}
       </ScrollView>
-    </SafeAreaView>
+    </View>
     </>
   )
 
@@ -63,7 +65,6 @@ const WishList = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#ffffff',
     borderRadius: 10,
     flex: 1,
   },

@@ -17,8 +17,6 @@ const AddWish = () => {
     };
 
     const handleImageChanged = (data) => {
-      // const image = data.map((img : WishPictureCreationDto) =>  img)
-      // console.log("eeee", JSON.stringify(image, null, 2))
       setImages(data)
       console.log(JSON.stringify(data, null, 2))
     }

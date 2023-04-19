@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, ActivityIndicator, Alert } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { WishService } from '../services/WishService';
@@ -8,13 +8,16 @@ import { uploadImageAsync } from '../config/firebase';
 
 
 const AddWish = () => {
-    const [cacheImagesURI, setCacheImagesURI] = useState<string[]>(null);
+    const [cacheImagesURI, setCacheImagesURI] = useState<string[]>([]);
     const [value, setValue] = useState({ title: 'Wish with pictures', description: 'For user 10', userId: 10});
     const [isLoading, setIsLoading] = useState<boolean>(false);
     
     const wishService = new WishService()
     
     const handleSubmit = async () => {
+      if(cacheImagesURI.length === 0)
+         
+
       setIsLoading(true)
       // Upload all images that are in the cache to firebase, and return a promise with all the Picture models
       const promises = cacheImagesURI.map(async (uri: string, index: number) => {

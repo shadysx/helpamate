@@ -27,8 +27,8 @@ export default function TabMenu({navigation}) {
                     <Ionicons
                     name={
                         focused
-                        ? 'ios-search'
-                        : 'ios-search-outline'
+                        ? 'ios-gift'
+                        : 'ios-gift-outline'
                     }
                     size={size}
                     color={color}
@@ -44,21 +44,12 @@ export default function TabMenu({navigation}) {
                     />
                   );
                 } 
-                else if (route.name === 'Add') {
-                  return (
-                      <Ionicons
-                      name={focused ? 'add-circle' : 'add-circle-outline'}
-                      size={size}
-                      color={color}
-                      />
-                  );
-                }
             },
             tabBarInactiveTintColor: 'gray',
             tabBarActiveTintColor: '#1E88E5',
             })}
         >
-            <Tab.Screen name="Wishes" component={WishList} options={{ headerShown: false }}/>
+            <Tab.Screen name="Wishes" component={WishList} options={{ headerShown: false}}/>
             <Tab.Screen name="My Profile" component={MyProfile}options={{ headerShown: false, }}/>
         </Tab.Navigator>
     </View>

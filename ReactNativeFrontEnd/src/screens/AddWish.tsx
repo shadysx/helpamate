@@ -1,6 +1,5 @@
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, ActivityIndicator, Alert, Image } from 'react-native'
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, ActivityIndicator, Alert, Image, Keyboard, TouchableWithoutFeedback } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { WishService } from '../services/WishService';
 import { AuthContext } from '../context/AuthContext';
 import MutipleImagePicker from '../components/MutipleImagePicker';
@@ -52,10 +51,6 @@ const AddWish = ({navigation}) => {
       }
     };
 
-    useEffect(() => {
-      console.log(isLoading)
-    },[isLoading])
-
     const handleAddImage = async (index) => {
       const selectedImage: string = await pickImage() 
       setCacheImagesURI((prevCacheImagesURI) => [...prevCacheImagesURI, selectedImage]);
@@ -79,12 +74,12 @@ const AddWish = ({navigation}) => {
     } 
     
     return (
-        
-      <View style={styles.container}>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.container} >
       <View>
         <View style={styles.topRow}>
           <Text style={styles.label}>Title</Text>
-          <Button onPress={() => navigation.goBack()} title="Cancel" />
+          {/* <Button onPress={() => navigation.goBack()} title="Cancel" /> */}
         </View>
         <TextInput
           style={styles.input}
@@ -102,6 +97,8 @@ const AddWish = ({navigation}) => {
           value={value.description}
           onChangeText={(text) => setValue({...value, description: text})}
           maxLength={140}
+          returnKeyType='done'
+          onSubmitEditing={() => Keyboard.dismiss()}
         />
         <Text style={styles.label}>Add Images</Text>
         <ImagePlaceHolder images={cacheImagesURI} numberOfImages={3} onAdd={handleAddImage} onDelete={handleDeleteImage}  />
@@ -111,6 +108,7 @@ const AddWish = ({navigation}) => {
         <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>
     </View>
+    </TouchableWithoutFeedback>  
     );
   };
   
@@ -136,7 +134,7 @@ const AddWish = ({navigation}) => {
     },
     input: {
       maxHeight: 160,
-      borderColor: '#B3B3B3',
+      borderColor: '#E2E2E2',
       borderWidth: 1,
       borderRadius: 5,
       padding: 10,
@@ -147,7 +145,7 @@ const AddWish = ({navigation}) => {
     },
     inputArea: {
       height: 120,
-      borderColor: '#B3B3B3',
+      borderColor: '#E2E2E2',
       borderWidth: 1,
       borderRadius: 5,
       padding: 10,
@@ -157,7 +155,7 @@ const AddWish = ({navigation}) => {
       textAlignVertical: 'top', // Add this to align the text at the top in Android devices
     },
     button: {
-      backgroundColor: '#FFA07A',
+      backgroundColor: '#1E88E5',
       borderRadius: 5,
       padding: 10,
       alignItems: 'center',

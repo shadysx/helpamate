@@ -26,7 +26,7 @@ const ImagePlaceHolder = ({ images, numberOfImages, onAdd, onDelete }) => {
                   {images[index] ? (
                     <MaterialIcons name={'remove-circle'} size={26} color='orange' />
                   ) : (
-                    <MaterialIcons name={'add-circle'} size={26} color={'green'} />
+                    <MaterialIcons name={'add-circle'} size={26} color={'#1E88E5'} />
                   )}
                 </TouchableOpacity>
               </View>
@@ -48,12 +48,9 @@ const styles = StyleSheet.create({
         borderRadius: 5,
       },
       previewImagePlaceHolder: {
-        width: 105,
+        flex: 1,
         height: 140, // Updated height value
         margin: 5,
-        borderWidth: 2,
-        borderColor: '#E2E2E2',
-        borderStyle: 'dotted',
         borderRadius: 5,
         position: "relative",
         overflow: "visible",
